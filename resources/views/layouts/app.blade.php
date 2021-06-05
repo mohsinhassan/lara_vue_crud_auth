@@ -74,7 +74,10 @@
                 </div>
             </div>
         </nav>
+        @guest
+        @else
         <div id="app"></div>
+        @endguest
 
         <main class="py-4">
             @yield('content')

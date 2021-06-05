@@ -29,7 +29,7 @@
     
     <body class="antialiased">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">i m in welcome
+            <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -81,12 +81,12 @@
                 </div>
             </div>
         </nav>
-        <!-- <div class="container">
+        <div class="container">
             <div class="text-center" style="margin: 20px 0px 20px 0px;">
-                <a href="https://shouts.dev/" target="_blank"><img src="logo.jpg"></a><br>
+                <a href="/home"><img src="logo.jpg"></a><br>
                 <span class="text-secondary">Laravel & Vue CRUD  - By Mohsin Hassan</span>
             </div>
-        </div> -->
+        </div>
         
         
     </body>

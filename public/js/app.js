@@ -37865,7 +37865,7 @@ var staticRenderFns = [
         staticStyle: { margin: "20px 0px 20px 0px" }
       },
       [
-        _c("a", { attrs: { href: "https://shouts.dev/", target: "_blank" } }, [
+        _c("a", { attrs: { href: "/home", target: "_blank" } }, [
           _c("img", { attrs: { src: "logo.jpg" } })
         ]),
         _c("br"),
