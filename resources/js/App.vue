@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
                     <router-link to="/" class="nav-item nav-link">Home</router-link>
-                    <router-link to="/add" class="nav-item nav-link">Add Book</router-link>
+                    <router-link to="/adddev" class="nav-item nav-link">Add Developer</router-link>
                 </div>
             </div>
         </nav>
