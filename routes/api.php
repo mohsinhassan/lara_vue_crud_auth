@@ -19,12 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('books', 'BookController@index');
+Route::get('books', 'App\Http\Controllers\BookController@index');
 Route::group(['prefix' => 'book'], function () {
-    Route::post('add', 'BookController@add');
-    Route::get('edit/{id}', 'BookController@edit');
-    Route::post('update/{id}', 'BookController@update');
-    Route::delete('delete/{id}', 'BookController@delete');
+    Route::post('add', 'App\Http\Controllers\BookController@add');
+    Route::get('edit/{id}', 'App\Http\Controllers\BookController@edit');
+    Route::post('update/{id}', 'App\Http\Controllers\BookController@update');
+    Route::delete('delete/{id}', 'App\Http\Controllers\BookController@delete');
 });
 
 //Route::get('books', 'App\Http\Controllers\BookController@index');

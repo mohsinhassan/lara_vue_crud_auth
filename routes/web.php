@@ -27,10 +27,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Route::get('books', 'App\Http\Controllers\BookController@index');
 // Route::group(['prefix' => 'book'], function () {
-//     Route::post('add', 'BookController@add');
-//     Route::get('edit/{id}', 'BookController@edit');
-//     Route::post('update/{id}', 'BookController@update');
-//     Route::delete('delete/{id}', 'BookController@delete');
+//     Route::post('add', 'App\Http\Controllers\BookController@add');
+//     Route::get('edit/{id}', 'App\Http\Controllers\BookController@edit');
+//     Route::post('update/{id}', 'App\Http\Controllers\BookController@update');
+//     Route::delete('delete/{id}', 'App\Http\Controllers\BookController@delete');
 // });
 
 /*Route::prefix('book')->group(function () {

@@ -2046,7 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.axios.get("http://localhost:8000/api/book/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.book = response.data; // console.log(response.data);
+      _this.book = response.data;
+      console.log('response');
+      console.log(response.data);
     });
   },
   methods: {
@@ -2166,7 +2168,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [{
-  name: 'list',
+  name: 'home',
   path: '/',
   component: _components_AllBooks_vue__WEBPACK_IMPORTED_MODULE_0__.default
 }, {
@@ -37864,14 +37866,12 @@ var staticRenderFns = [
       },
       [
         _c("a", { attrs: { href: "https://shouts.dev/", target: "_blank" } }, [
-          _c("img", { attrs: { src: "https://i.imgur.com/hHZjfUq.png" } })
+          _c("img", { attrs: { src: "logo.jpg" } })
         ]),
         _c("br"),
         _vm._v(" "),
         _c("span", { staticClass: "text-secondary" }, [
-          _vm._v(
-            "Laravel & Vue CRUD - By Mohsin Hassan"
-          )
+          _vm._v("Laravel & Vue CRUD  - By Mohsin Hassan")
         ])
       ]
     )

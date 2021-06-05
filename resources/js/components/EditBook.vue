@@ -31,7 +31,8 @@
                 .get(`http://localhost:8000/api/book/edit/${this.$route.params.id}`)
                 .then((response) => {
                     this.book = response.data;
-                    // console.log(response.data);
+                    console.log('response');
+                    console.log(response.data);
                 });
         },
         methods: {
