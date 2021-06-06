@@ -15,15 +15,15 @@ class DeveloperController extends Controller
     public function add(Request $request)
     {
         
-        $request->validate([            
-            'fname' => 'required|max:50',
-            'lname' => 'required|max:50',
-            'email' => 'email address',
-            'email' => 'required|unique:developers|max:50',
-            'phone_number' => 'required|max:20',
-            'address' => 'required|max:255',
+        // $request->validate([            
+        //     'fname' => 'required|max:50',
+        //     'lname' => 'required|max:50',
+        //     'email' => 'email address',
+        //     'email' => 'required|unique:developers|max:50',
+        //     'phone_number' => 'required|max:20',
+        //     'address' => 'required|max:255',
             
-        ]);
+        // ]);
         //'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048','regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
     
         

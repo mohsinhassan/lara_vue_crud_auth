@@ -1949,7 +1949,6 @@ __webpack_require__.r(__webpack_exports__);
       return re.test(email);
     },
     addDeveloper: function addDeveloper(e) {
-      alert("here");
       this.errors = [];
 
       if (!this.developer.fname) {
@@ -1976,11 +1975,10 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.push('Email required.');
       } else if (!this.validEmail(this.developer.email)) {
         this.errors.push('Valid email required.');
-      }
+      } //if (this.errors.length) {
+      //  return false;
+      //}
 
-      if (this.errors.length) {
-        return false;
-      }
 
       e.preventDefault();
       var existingObj = this;
@@ -1996,7 +1994,13 @@ __webpack_require__.r(__webpack_exports__);
       data.append('phone_number', this.developer.phone_number);
       data.append('address', this.developer.address);
       data.append('avatar', this.file);
-      axios.post('http://localhost:8000/api/developer/add', data, config).then(function (res) {
+      this.axios.post('http://localhost:8000/api/developer/add', data, config).then(function (res) {
+        this.$router.push({
+          name: 'home'
+        });
+        this.$router.replace({
+          name: 'home'
+        });
         console.log('res');
         console.log(res);
 
@@ -2005,13 +2009,24 @@ __webpack_require__.r(__webpack_exports__);
             console.log(entry);
           });
         } else {
-          this.success = "Developer added successfully"; //this.$router.push({name: 'home'});
+          alert("Developer added successfully");
+          this.$router.replace({
+            name: 'home'
+          });
+          this.$router.push({
+            name: 'home'
+          });
         }
       })["catch"](function (error) {
         console.log('error');
         console.log(error);
       });
     }
+  },
+  mounted: function mounted() {
+    console.log({
+      router: this.$router
+    });
   }
 });
 
@@ -2273,8 +2288,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__.default({
   routes: _routes__WEBPACK_IMPORTED_MODULE_3__.routes
 });
 var app = new (vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default())({
-  el: '#app',
   router: router,
+  el: '#app',
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__.default);
   }
@@ -38044,7 +38059,7 @@ var staticRenderFns = [
         staticStyle: { margin: "20px 0px 20px 0px" }
       },
       [
-        _c("a", { attrs: { href: "/home", target: "_blank" } }, [
+        _c("a", { attrs: { href: "/home" } }, [
           _c("img", { attrs: { src: "logo.jpg" } })
         ]),
         _c("br"),

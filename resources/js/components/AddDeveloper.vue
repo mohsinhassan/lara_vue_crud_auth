@@ -68,7 +68,6 @@
                 return re.test(email);
             },
             addDeveloper(e) {
-                alert("here");
                 this.errors = [];
 
                 if (!this.developer.fname) {
@@ -94,9 +93,9 @@
                     this.errors.push('Valid email required.');
                 }
 
-                if (this.errors.length) {
-                    return false;
-                }
+                //if (this.errors.length) {
+                  //  return false;
+                //}
 
                 e.preventDefault();
                 let existingObj = this;
@@ -115,8 +114,10 @@
                 data.append('address', this.developer.address);
                 data.append('avatar',  this.file);
 
-                axios.post('http://localhost:8000/api/developer/add', data, config)
+                this.axios.post('http://localhost:8000/api/developer/add', data, config)
                     .then(function (res) {
+                        this.$router.push({name: 'home'});
+                        this.$router.replace({name: 'home'});
                         console.log('res');
                         console.log(res);
                         if(res.data.success != "Done!")
@@ -126,8 +127,9 @@
                             });
                             
                         }else{
-                            this.success = "Developer added successfully";
-                            //this.$router.push({name: 'home'});
+                            alert("Developer added successfully");
+                            this.$router.replace({name: 'home'});
+                            this.$router.push({name: 'home'});
                         }
                         
                         
@@ -138,6 +140,10 @@
                     });
                 
             }
+            
+        },
+        mounted() {
+            console.log({router: this.$router});
         }
     }
 </script>
