@@ -2,7 +2,14 @@
     <div>
         <h3 class="text-center">Edit Developer2</h3>
         <div class="row">
+        
             <div class="col-md-6">
+            <p v-if="errors.length" style="color:red;">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                <li v-for="error in errors">{{ error }}</li>
+                </ul>
+            </p>
                 <form @submit.prevent="updateDeveloper">
                     <div class="form-group">
                         <label>First Name</label>
@@ -45,7 +52,8 @@
         data() {
             return {
                 developer: {},
-                file:''
+                file:'',
+                 errors: [],
             }
         },
         created() {
@@ -61,7 +69,39 @@
             onChange(e) {
                 this.file = e.target.files[0];
             },
+            validEmail: function (email) {
+                var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            },
             updateDeveloper(e) {
+
+                 this.errors = [];
+
+                if (!this.developer.fname) {
+                    this.errors.push('First Name required.');
+                }
+                if (!this.developer.lname) {
+                    this.errors.push('Last Name required.');
+                }
+                
+                if (!this.developer.phone_number) {
+                    this.errors.push('Phone required.');
+                }
+                if (!this.developer.address) {
+                    this.errors.push('Address required.');
+                }
+
+                if (!this.developer.email) {
+                    this.errors.push('Email required.');
+                } else if (!this.validEmail(this.developer.email)) {
+                    this.errors.push('Valid email required.');
+                }
+
+                if (this.errors.length) {
+                    return false;
+                }
+
+                
                  e.preventDefault();
 
                 const config = {

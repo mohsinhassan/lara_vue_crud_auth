@@ -15,9 +15,17 @@ class DeveloperController extends Controller
     public function add(Request $request)
     {
         
-        $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        $request->validate([            
+            'fname' => 'required|max:50',
+            'lname' => 'required|max:50',
+            'email' => 'email address',
+            'email' => 'required|unique:developers|max:50',
+            'phone_number' => 'required|max:20',
+            'address' => 'required|max:255',
+            
         ]);
+        //'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048','regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+    
         
         $file_name = "";
 
@@ -37,20 +45,10 @@ class DeveloperController extends Controller
         ]);
 
         $Developer->save();
-
-        return response()->json('The developer successfully added');
+        return response()->json(['success'=>'Done!']);
+        //return response()->json('The developer successfully added');
     }
 
-    public function store(Request $request)
-    {
-        $developer = new Developer([
-            'name' => $request->input('name'),
-            'detail' => $request->input('detail')
-        ]);
-        $developer->save();
-
-        return response()->json('Developer created!');
-    }
 
     public function edit($id)
     {
@@ -60,6 +58,16 @@ class DeveloperController extends Controller
 
     public function update($id, Request $request)
     {
+
+        $request->validate([            
+            'fname' => 'required|max:50',
+            'lname' => 'required|max:50',
+            'email' => 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+            'phone_number' => 'required|max:20',
+            'address' => 'required|max:255'
+        ]);
+//'email' => 'required|unique:developers|max:50',
+ 
         $developer = Developer::find($id);
 
         $request->validate([

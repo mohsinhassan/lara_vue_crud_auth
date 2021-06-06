@@ -1,7 +1,3 @@
-// import AllBooks from './components/AllBooks.vue';
-// import AddBook from './components/AddBook.vue';
-// import EditBook from './components/EditBook.vue';
-
 
 import AllDevelopers from './components/AllDevelopers.vue';
 import AddDeveloper from './components/AddDeveloper.vue';

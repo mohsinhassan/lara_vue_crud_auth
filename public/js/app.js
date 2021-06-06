@@ -1921,19 +1921,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       developer: {},
-      success: false
+      success: '',
+      errors: []
     };
   },
   methods: {
     onChange: function onChange(e) {
       this.file = e.target.files[0];
     },
+    validEmail: function validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     addDeveloper: function addDeveloper(e) {
-      var _this = this;
+      alert("here");
+      this.errors = [];
+
+      if (!this.developer.fname) {
+        this.errors.push('First Name required.');
+      }
+
+      if (!this.developer.lname) {
+        this.errors.push('Last Name required.');
+      }
+
+      if (!this.developer.phone_number) {
+        this.errors.push('Phone required.');
+      }
+
+      if (!this.developer.address) {
+        this.errors.push('Address required.');
+      }
+
+      if (!this.file) {
+        this.errors.push('Avatar required.');
+      }
+
+      if (!this.developer.email) {
+        this.errors.push('Email required.');
+      } else if (!this.validEmail(this.developer.email)) {
+        this.errors.push('Valid email required.');
+      }
+
+      if (this.errors.length) {
+        return false;
+      }
 
       e.preventDefault();
       var existingObj = this;
@@ -1950,13 +1997,19 @@ __webpack_require__.r(__webpack_exports__);
       data.append('address', this.developer.address);
       data.append('avatar', this.file);
       axios.post('http://localhost:8000/api/developer/add', data, config).then(function (res) {
-        this.$router.push({
-          name: 'home'
-        });
-      })["catch"](function (err) {
-        existingObj.output = err;
-      })["finally"](function () {
-        return _this.loading = false;
+        console.log('res');
+        console.log(res);
+
+        if (res.data.success != "Done!") {
+          res.errors.forEach(function (entry) {
+            console.log(entry);
+          });
+        } else {
+          this.success = "Developer added successfully"; //this.$router.push({name: 'home'});
+        }
+      })["catch"](function (error) {
+        console.log('error');
+        console.log(error);
       });
     }
   }
@@ -2098,11 +2151,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       developer: {},
-      file: ''
+      file: '',
+      errors: []
     };
   },
   created: function created() {
@@ -2118,8 +2179,40 @@ __webpack_require__.r(__webpack_exports__);
     onChange: function onChange(e) {
       this.file = e.target.files[0];
     },
+    validEmail: function validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     updateDeveloper: function updateDeveloper(e) {
       var _this2 = this;
+
+      this.errors = [];
+
+      if (!this.developer.fname) {
+        this.errors.push('First Name required.');
+      }
+
+      if (!this.developer.lname) {
+        this.errors.push('Last Name required.');
+      }
+
+      if (!this.developer.phone_number) {
+        this.errors.push('Phone required.');
+      }
+
+      if (!this.developer.address) {
+        this.errors.push('Address required.');
+      }
+
+      if (!this.developer.email) {
+        this.errors.push('Email required.');
+      } else if (!this.validEmail(this.developer.email)) {
+        this.errors.push('Valid email required.');
+      }
+
+      if (this.errors.length) {
+        return false;
+      }
 
       e.preventDefault();
       var config = {
@@ -2247,9 +2340,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_AllDevelopers_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/AllDevelopers.vue */ "./resources/js/components/AllDevelopers.vue");
 /* harmony import */ var _components_AddDeveloper_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/AddDeveloper.vue */ "./resources/js/components/AddDeveloper.vue");
 /* harmony import */ var _components_EditDeveloper_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/EditDeveloper.vue */ "./resources/js/components/EditDeveloper.vue");
-// import AllBooks from './components/AllBooks.vue';
-// import AddBook from './components/AddBook.vue';
-// import EditBook from './components/EditBook.vue';
 
 
 
@@ -37991,9 +38081,23 @@ var render = function() {
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("Add Developer")]),
     _vm._v(" "),
+    _vm.errors.length
+      ? _c("p", { staticStyle: { color: "red" } }, [
+          _c("b", [_vm._v("Please correct the following error(s):")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.errors, function(error) {
+              return _c("li", [_vm._v(_vm._s(error))])
+            }),
+            0
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _vm.success != ""
-      ? _c("div", { staticClass: "alert alert-success" }, [
-          _vm._v("\n        " + _vm._s(_vm.success) + "\n    ")
+      ? _c("p", { staticStyle: { color: "gree" } }, [
+          _c("b", [_vm._v(_vm._s(_vm.success))])
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -38076,7 +38180,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { id: "email", type: "email" },
                 domProps: { value: _vm.developer.email },
                 on: {
                   input: function($event) {
@@ -38300,6 +38404,20 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-6" }, [
+        _vm.errors.length
+          ? _c("p", { staticStyle: { color: "red" } }, [
+              _c("b", [_vm._v("Please correct the following error(s):")]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                _vm._l(_vm.errors, function(error) {
+                  return _c("li", [_vm._v(_vm._s(error))])
+                }),
+                0
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "form",
           {
