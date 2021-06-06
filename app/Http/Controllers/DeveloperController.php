@@ -14,13 +14,31 @@ class DeveloperController extends Controller
 
     public function add(Request $request)
     {
+        
+        // $request->validate([
+        //     'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+    
+        // $imageName = time().'.'.$request->image->extension();  
+     
+        // $request->image->move(public_path('images'), $imageName);
+        $file_name = "";
+
+        if($request->file()) {
+            $pic = $request->file('avatar');
+            $file_name = time().$pic->getClientOriginalName();
+            $file_path = $pic->storeAs('uploads', $file_name, 'public');
+            $pic->move(base_path('\public\uploads'), $pic->getClientOriginalName());
+        }
         $Developer = new Developer([
             'fname' => $request->input('fname'),
             'lname' => $request->input('lname'),
             'phone_number' => $request->input('phone_number'),
             'email' => $request->input('email'),
-            'address' => $request->input('address')
+            'address' => $request->input('address'),
+            'avatar' => '\public\uploads'.$file_name 
         ]);
+
         $Developer->save();
 
         return response()->json('The developer successfully added');

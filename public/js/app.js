@@ -1913,6 +1913,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -1920,16 +1928,32 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addDeveloper: function addDeveloper() {
+    onChange: function onChange(e) {
+      this.file = e.target.files[0];
+    },
+    addDeveloper: function addDeveloper(e) {
       var _this = this;
 
-      this.axios.post('http://localhost:8000/api/developer/add', this.developer).then(function (response) {
-        return _this.$router.push({
+      e.preventDefault();
+      var existingObj = this;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var data = new FormData();
+      data.append('fname', this.developer.fname);
+      data.append('lname', this.developer.lname);
+      data.append('email', this.developer.email);
+      data.append('phone_number', this.developer.phone_number);
+      data.append('address', this.developer.address);
+      data.append('avatar', this.file);
+      axios.post('http://localhost:8000/api/developer/add', data, config).then(function (res) {
+        this.$router.push({
           name: 'home'
-        }) // console.log(response.data)
-        ;
-      })["catch"](function (error) {
-        return console.log(error);
+        });
+      })["catch"](function (err) {
+        existingObj.output = err;
       })["finally"](function () {
         return _this.loading = false;
       });
@@ -1950,6 +1974,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -37938,6 +37965,7 @@ var render = function() {
         _c(
           "form",
           {
+            attrs: { enctype: "multipart/form-data" },
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -38076,9 +38104,30 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Avatar")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file" },
+                on: {
+                  change: function($event) {
+                    return _vm.onChange(_vm.e)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                staticClass: "btn btn-primary btn-block",
+                on: {
+                  change: function($event) {
+                    return _vm.addDeveloper(_vm.e)
+                  }
+                }
+              },
               [_vm._v("Add Developer")]
             )
           ]
@@ -38113,6 +38162,12 @@ var render = function() {
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("All Developers")]),
     _c("br"),
+    _vm._v(" "),
+    _vm.success != ""
+      ? _c("div", { staticClass: "alert alert-success" }, [
+          _vm._v("\n        " + _vm._s(_vm.success) + "\n    ")
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("table", { staticClass: "table table-bordered" }, [
       _vm._m(0),
