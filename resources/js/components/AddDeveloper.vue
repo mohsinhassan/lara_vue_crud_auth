@@ -126,8 +126,7 @@
                             });
                             
                         }else{
-                            alert("Developer added successfully. You can add another developer");
-                            //this.$router.replace({name: 'home'});
+                            alert("Developer added successfully.");
                             self.$router.push({name: 'home'});
                             this.developer = {};
                         }

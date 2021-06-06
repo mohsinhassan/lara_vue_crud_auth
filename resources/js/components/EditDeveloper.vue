@@ -125,6 +125,7 @@
                 this.axios
                     .post(`http://localhost:8000/api/developer/update/${this.$route.params.id}`,  data, config)
                     .then((response) => {
+                        alert("Developer has been updated successfully.");
                         this.$router.push({name: 'home'});
                     });
             }

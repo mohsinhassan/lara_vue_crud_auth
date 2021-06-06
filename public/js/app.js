@@ -2005,8 +2005,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(entry);
           });
         } else {
-          alert("Developer added successfully. You can add another developer"); //this.$router.replace({name: 'home'});
-
+          alert("Developer added successfully.");
           self.$router.push({
             name: 'home'
           });
@@ -2240,6 +2239,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.axios.post("http://localhost:8000/api/developer/update/".concat(this.$route.params.id), data, config).then(function (response) {
+        alert("Developer has been updated successfully.");
+
         _this2.$router.push({
           name: 'home'
         });
