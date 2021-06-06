@@ -1950,6 +1950,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     addDeveloper: function addDeveloper(e) {
       this.errors = [];
+      var self = this;
 
       if (!this.developer.fname) {
         this.errors.push('First Name required.');
@@ -1975,12 +1976,13 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.push('Email required.');
       } else if (!this.validEmail(this.developer.email)) {
         this.errors.push('Valid email required.');
-      } //if (this.errors.length) {
-      //  return false;
-      //}
+      }
+
+      if (this.errors.length) {
+        return false;
+      } //e.preventDefault();
 
 
-      e.preventDefault();
       var existingObj = this;
       var config = {
         headers: {
@@ -1995,12 +1997,6 @@ __webpack_require__.r(__webpack_exports__);
       data.append('address', this.developer.address);
       data.append('avatar', this.file);
       this.axios.post('http://localhost:8000/api/developer/add', data, config).then(function (res) {
-        this.$router.push({
-          name: 'home'
-        });
-        this.$router.replace({
-          name: 'home'
-        });
         console.log('res');
         console.log(res);
 
@@ -2009,13 +2005,12 @@ __webpack_require__.r(__webpack_exports__);
             console.log(entry);
           });
         } else {
-          alert("Developer added successfully");
-          this.$router.replace({
+          alert("Developer added successfully. You can add another developer"); //this.$router.replace({name: 'home'});
+
+          self.$router.push({
             name: 'home'
           });
-          this.$router.push({
-            name: 'home'
-          });
+          this.developer = {};
         }
       });
     }
@@ -2121,6 +2116,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -38113,7 +38109,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-6" }, [
         _c(
           "form",
@@ -38267,9 +38263,14 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("button", { staticClass: "btn btn-primary btn-block" }, [
-              _vm._v("Add Developer")
-            ])
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-block",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Add Developer")]
+            )
           ]
         )
       ])
@@ -38412,9 +38413,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", { staticClass: "text-center" }, [_vm._v("Edit Developer2")]),
+    _c("h3", { staticClass: "text-center" }, [_vm._v("Edit Developer")]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-6" }, [
         _vm.errors.length
           ? _c("p", { staticStyle: { color: "red" } }, [

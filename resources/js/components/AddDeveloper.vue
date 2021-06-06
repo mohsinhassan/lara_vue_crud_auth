@@ -10,7 +10,7 @@
         <p v-if="success!=''" style="color:gree;">
             <b>{{success}}</b>
         </p>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-6">
                 <form @submit.prevent="addDeveloper" enctype="multipart/form-data">
                     <div class="form-group">
@@ -43,7 +43,7 @@
                         <input type="file" class="form-control" v-on:change="onChange">
                        
                     </div>
-                    <button class="btn btn-primary btn-block">Add Developer</button>
+                    <button type="submit" class="btn btn-primary btn-block">Add Developer</button>
                 </form>
             </div>
         </div>
@@ -69,6 +69,7 @@
             },
             addDeveloper(e) {
                 this.errors = [];
+                let self = this;
 
                 if (!this.developer.fname) {
                     this.errors.push('First Name required.');
@@ -93,11 +94,11 @@
                     this.errors.push('Valid email required.');
                 }
 
-                //if (this.errors.length) {
-                  //  return false;
-                //}
+                if (this.errors.length) {
+                    return false;
+                }
 
-                e.preventDefault();
+                //e.preventDefault();
                 let existingObj = this;
 
                 const config = {
@@ -116,8 +117,6 @@
 
                 this.axios.post('http://localhost:8000/api/developer/add', data, config)
                     .then(function (res) {
-                        this.$router.push({name: 'home'});
-                        this.$router.replace({name: 'home'});
                         console.log('res');
                         console.log(res);
                         if(res.data.success != "Done!")
@@ -127,9 +126,10 @@
                             });
                             
                         }else{
-                            alert("Developer added successfully");
-                            this.$router.replace({name: 'home'});
-                            this.$router.push({name: 'home'});
+                            alert("Developer added successfully. You can add another developer");
+                            //this.$router.replace({name: 'home'});
+                            self.$router.push({name: 'home'});
+                            this.developer = {};
                         }
                         
                         

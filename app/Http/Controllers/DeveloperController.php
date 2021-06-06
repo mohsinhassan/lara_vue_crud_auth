@@ -15,15 +15,15 @@ class DeveloperController extends Controller
     public function add(Request $request)
     {
         
-        $request->validate([            
-            'fname' => 'required|max:50',
-            'lname' => 'required|max:50',
-            'email' => 'required|unique:developers|max:50',
-            'phone_number' => 'required|max:20',
-            'address' => 'required|max:255',
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        // $request->validate([            
+        //     'fname' => 'required|max:50',
+        //     'lname' => 'required|max:50',
+        //     'email' => 'required|unique:developers|max:50',
+        //     'phone_number' => 'required|max:20',
+        //     'address' => 'required|max:255',
+        //     'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             
-        ]);
+        // ]);
     
         
         $file_name = "";
@@ -58,15 +58,15 @@ class DeveloperController extends Controller
     public function update($id, Request $request)
     {
 
-        $request->validate([            
-            'fname' => 'required|max:50',
-            'lname' => 'required|max:50',
-            'email' => 'required|unique:developers|max:50',
-            'phone_number' => 'required|max:20',
-            'address' => 'required|max:255',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        // $request->validate([            
+        //     'fname' => 'required|max:50',
+        //     'lname' => 'required|max:50',
+        //     'email' => 'required|unique:developers|max:50',
+        //     'phone_number' => 'required|max:20',
+        //     'address' => 'required|max:255',
+        //     'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             
-        ]);
+        // ]);
  
         $developer = Developer::find($id);
 

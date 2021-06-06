@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h3 class="text-center">Edit Developer2</h3>
-        <div class="row">
+        <h3 class="text-center">Edit Developer</h3>
+        <div class="row justify-content-center">
         
             <div class="col-md-6">
             <p v-if="errors.length" style="color:red;">
@@ -11,6 +11,7 @@
                 </ul>
             </p>
                 <form @submit.prevent="updateDeveloper">
+                
                     <div class="form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" v-model="developer.fname">
