@@ -2017,9 +2017,6 @@ __webpack_require__.r(__webpack_exports__);
             name: 'home'
           });
         }
-      })["catch"](function (error) {
-        console.log('error');
-        console.log(error);
       });
     }
   },
