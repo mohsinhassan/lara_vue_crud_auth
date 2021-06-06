@@ -1,6 +1,9 @@
 <template>
     <div>
         <h3 class="text-center">Add Developer</h3>
+        <div v-if="success != ''" class="alert alert-success">
+            {{success}}
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <form @submit.prevent="addDeveloper" enctype="multipart/form-data">
@@ -24,15 +27,12 @@
                         <label>Address</label>
                         <input type="text" class="form-control" v-model="developer.address">
                     </div>
-                    <!--div class="form-group">
-                        <img v-bind:src="this.developer.avatar" alt="Avatar" />
-                        
-                    </div-->
+                    
                     <div class="form-group">
                         <label>Avatar</label>
-                        <input type="file" class="form-control" v-on:change="onChange(e)">
+                        <input type="file" class="form-control" v-on:change="onChange">
                     </div>
-                    <button class="btn btn-primary btn-block" v-on:change="addDeveloper(e)">Add Developer</button>
+                    <button class="btn btn-primary btn-block">Add Developer</button>
                 </form>
             </div>
         </div>
@@ -43,7 +43,8 @@
     export default {
         data() {
             return {
-                developer: {}
+                developer: {},
+                success:false
             }
         },
         methods: {

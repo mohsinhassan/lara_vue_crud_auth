@@ -24,8 +24,16 @@
                         <label>Address</label>
                         <input type="text" class="form-control" v-model="developer.address">
                     </div>
+                    <div class="form-group">
+                        <img v-bind:src="this.developer.avatar" alt="Avatar" style="max-width:200px;" />
+                        
+                    </div>
+                    <div class="form-group">
+                        <label>Avatar</label>
+                        <input type="file" class="form-control" v-on:change="onChange">
+                    </div>
                     
-                    <button type="submit" class="btn btn-primary">Update Developer</button>
+                    <button class="btn btn-primary" v-on:change="updateDeveloper">Update Developer</button>
                 </form>
             </div>
         </div>
@@ -36,7 +44,8 @@
     export default {
         data() {
             return {
-                developer: {}
+                developer: {},
+                file:''
             }
         },
         created() {
@@ -49,9 +58,31 @@
                 });
         },
         methods: {
-            updateDeveloper() {
+            onChange(e) {
+                this.file = e.target.files[0];
+            },
+            updateDeveloper(e) {
+                 e.preventDefault();
+
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }
+
+                let data = new FormData();
+                data.append('fname', this.developer.fname);
+                data.append('lname', this.developer.lname);
+                data.append('email', this.developer.email);
+                data.append('phone_number', this.developer.phone_number);
+                data.append('address', this.developer.address);
+                if(this.file !=''){
+                    data.append('avatar',  this.file);
+                } 
+                
+
                 this.axios
-                    .post(`http://localhost:8000/api/developer/update/${this.$route.params.id}`, this.developer)
+                    .post(`http://localhost:8000/api/developer/update/${this.$route.params.id}`,  data, config)
                     .then((response) => {
                         this.$router.push({name: 'home'});
                     });

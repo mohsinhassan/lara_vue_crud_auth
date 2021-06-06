@@ -1924,7 +1924,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      developer: {}
+      developer: {},
+      success: false
     };
   },
   methods: {
@@ -2015,7 +2016,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      developers: []
+      developers: [],
+      success: false
     };
   },
   created: function created() {
@@ -2088,10 +2090,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      developer: {}
+      developer: {},
+      file: ''
     };
   },
   created: function created() {
@@ -2104,10 +2115,30 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    updateDeveloper: function updateDeveloper() {
+    onChange: function onChange(e) {
+      this.file = e.target.files[0];
+    },
+    updateDeveloper: function updateDeveloper(e) {
       var _this2 = this;
 
-      this.axios.post("http://localhost:8000/api/developer/update/".concat(this.$route.params.id), this.developer).then(function (response) {
+      e.preventDefault();
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var data = new FormData();
+      data.append('fname', this.developer.fname);
+      data.append('lname', this.developer.lname);
+      data.append('email', this.developer.email);
+      data.append('phone_number', this.developer.phone_number);
+      data.append('address', this.developer.address);
+
+      if (this.file != '') {
+        data.append('avatar', this.file);
+      }
+
+      this.axios.post("http://localhost:8000/api/developer/update/".concat(this.$route.params.id), data, config).then(function (response) {
         _this2.$router.push({
           name: 'home'
         });
@@ -37960,6 +37991,12 @@ var render = function() {
   return _c("div", [
     _c("h3", { staticClass: "text-center" }, [_vm._v("Add Developer")]),
     _vm._v(" "),
+    _vm.success != ""
+      ? _c("div", { staticClass: "alert alert-success" }, [
+          _vm._v("\n        " + _vm._s(_vm.success) + "\n    ")
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-6" }, [
         _c(
@@ -38110,26 +38147,13 @@ var render = function() {
               _c("input", {
                 staticClass: "form-control",
                 attrs: { type: "file" },
-                on: {
-                  change: function($event) {
-                    return _vm.onChange(_vm.e)
-                  }
-                }
+                on: { change: _vm.onChange }
               })
             ]),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary btn-block",
-                on: {
-                  change: function($event) {
-                    return _vm.addDeveloper(_vm.e)
-                  }
-                }
-              },
-              [_vm._v("Add Developer")]
-            )
+            _c("button", { staticClass: "btn btn-primary btn-block" }, [
+              _vm._v("Add Developer")
+            ])
           ]
         )
       ])
@@ -38417,9 +38441,29 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("img", {
+                staticStyle: { "max-width": "200px" },
+                attrs: { src: this.developer.avatar, alt: "Avatar" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Avatar")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file" },
+                on: { change: _vm.onChange }
+              })
+            ]),
+            _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              {
+                staticClass: "btn btn-primary",
+                on: { change: _vm.updateDeveloper }
+              },
               [_vm._v("Update Developer")]
             )
           ]

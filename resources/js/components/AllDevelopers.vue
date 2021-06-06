@@ -40,7 +40,8 @@
     export default {
         data() {
             return {
-                developers: []
+                developers: [],
+                success:false
             }
         },
         created() {

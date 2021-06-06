@@ -15,20 +15,17 @@ class DeveloperController extends Controller
     public function add(Request $request)
     {
         
-        // $request->validate([
-        //     'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]);
-    
-        // $imageName = time().'.'.$request->image->extension();  
-     
-        // $request->image->move(public_path('images'), $imageName);
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
         $file_name = "";
 
         if($request->file()) {
             $pic = $request->file('avatar');
             $file_name = time().$pic->getClientOriginalName();
             $file_path = $pic->storeAs('uploads', $file_name, 'public');
-            $pic->move(base_path('\public\uploads'), $pic->getClientOriginalName());
+            $pic->move(base_path('\public\uploads'), $file_name);
         }
         $Developer = new Developer([
             'fname' => $request->input('fname'),
@@ -36,7 +33,7 @@ class DeveloperController extends Controller
             'phone_number' => $request->input('phone_number'),
             'email' => $request->input('email'),
             'address' => $request->input('address'),
-            'avatar' => '\public\uploads'.$file_name 
+            'avatar' => '/uploads/'.$file_name 
         ]);
 
         $Developer->save();
@@ -61,16 +58,43 @@ class DeveloperController extends Controller
         return response()->json($Developer);
     }
 
-    // public function show($id)
-    // {
-    //     $developer = Developer::find($id);
-    //     return response()->json($developer);
-    // }
-
     public function update($id, Request $request)
     {
         $developer = Developer::find($id);
-        $developer->update($request->all());
+
+        $request->validate([
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
+        $file_name = "";
+
+        $form_data = array(
+            'fname'       =>   $request->fname,
+            'lname'        =>   $request->lname,
+            'email'            =>  $request->email,
+            'phone_number'            =>  $request->phone_number,
+            'address'            =>  $request->address
+        );
+
+
+        if($request->file()) {
+            $pic = $request->file('avatar');
+            $file_name = time().$pic->getClientOriginalName();
+            $file_path = $pic->storeAs('uploads', $file_name, 'public');
+            $pic->move(base_path('\public\uploads'), $file_name);
+        }
+        if(!empty($file_name)){
+            $form_data = array(
+                'fname'       =>   $request->fname,
+                'lname'        =>   $request->lname,
+                'email'            =>  $request->email,
+                'phone_number'            =>  $request->phone_number,
+                'address'            =>  $request->address,
+                'avatar'            =>  '/uploads/'.$file_name 
+            );
+        }
+
+        $developer->update($form_data);
 
         return response()->json('Developer updated!');
     }
