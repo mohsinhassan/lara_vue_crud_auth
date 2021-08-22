@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
+#use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,32 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('books', 'BookController@index');
-Route::group(['prefix' => 'book'], function () {
-    Route::post('add', 'BookController@add');
-    Route::get('edit/{id}', 'BookController@edit');
-    Route::post('update/{id}', 'BookController@update');
-    Route::delete('delete/{id}', 'BookController@delete');
+
+Route::get('developers', 'App\Http\Controllers\DeveloperController@index');
+Route::group(['prefix' => 'developer'], function () {
+    Route::post('add', 'App\Http\Controllers\DeveloperController@add');
+    Route::get('edit/{id}', 'App\Http\Controllers\DeveloperController@edit');
+    Route::post('update/{id}', 'App\Http\Controllers\DeveloperController@update');
+    Route::delete('delete/{id}', 'App\Http\Controllers\DeveloperController@delete');
 });
-
-//Route::get('books', 'App\Http\Controllers\BookController@index');
-// Route::group(['prefix' => 'book'], function () {
-//     Route::post('add', 'App\Http\Controllers\BookController@add');
-//     Route::get('edit/{id}', 'App\Http\Controllers\BookController@edit');
-//     Route::post('update/{id}', 'App\Http\Controllers\BookController@update');
-//     Route::delete('delete/{id}', 'App\Http\Controllers\BookController@delete');
-// });
-
-// Route::prefix('/book')->group( function () {
-
-//     Route::post('/add', [BookController::class, 'add']);
-//     Route::get('edit/{id}', [BookController::class, 'edit']);
-//     Route::post('update/{id}', [BookController::class, 'update']);
-//     Route::delete('delete/{id}', [BookController::class, 'delete']);
-
-//     // Route::post('add', 'BookController@add');
-//     // Route::get('edit/{id}', 'BookController@edit');
-//     // Route::post('update/{id}', 'BookController@update');
-//     // Route::delete('delete/{id}', 'BookController@delete');
-// });
-

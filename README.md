@@ -7,6 +7,20 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+
+## Important Commands to run project, please use the command as per your environment setup.
+
+https://github.com/mohsinhassan/lara_vue_crud_auth.git
+git pull origin main
+git checkout develop
+git pull origin develop
+php artisan migrate
+composer require laravel/ui
+php artisan ui vue
+npm install vue-router vue-axios
+npm install
+npm run watch
+php artisan serve
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
