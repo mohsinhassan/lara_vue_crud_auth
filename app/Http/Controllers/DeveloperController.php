@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Developer;
 class DeveloperController extends Controller
 {
+    
     public function index()
     {
         $developers = Developer::all()->toArray();
